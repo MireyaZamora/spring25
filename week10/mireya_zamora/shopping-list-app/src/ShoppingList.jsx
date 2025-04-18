@@ -1,10 +1,7 @@
-function ShoppingList({ shoppingList, removeItem }) {
-    const totalSpent = shoppingList.reduce((acc, item) => acc + Number(item.cost), 0);
-    const remainingBudget = totalSpent;
+function ShoppingList({ shoppingList, removeItem, budget }) {
+    const totalSpent = shoppingList.reduce((acc, item) => acc + Number(item.cost) * item.quantity, 0);
+    const remainingBudget = budget - totalSpent;
 
-    const handleBudgetChange = (e) => {
-        setBudget(Number(e.target.value)); 
-    };
 
 
  
@@ -17,6 +14,8 @@ function ShoppingList({ shoppingList, removeItem }) {
                     key={index}
                 >
                     <span>{val.name}</span>
+                    <span>{` Quantity: ${val.quantity}`}</span> 
+                    <span>{` Cost: $${(val.cost * val.quantity).toFixed(2)}`}</span>
                     <span>
                         <button className='btn' onClick={removeItem} value={val.name}>x</button>
                     </span>
@@ -26,8 +25,6 @@ function ShoppingList({ shoppingList, removeItem }) {
     );
  }
  
-
-
 
  
  

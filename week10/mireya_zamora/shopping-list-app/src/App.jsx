@@ -13,10 +13,26 @@ function App() {
        let form = event.target;
        let formData = new FormData(form)
        let formDataObj = Object.fromEntries(formData.entries())
+
        formDataObj.cost = parseFloat(formDataObj.cost || 0);
+       formDataObj.quantity = parseInt(formDataObj.quantity || 1);
+    //repeats - idk something is wrong i stated add radnom code....
+       const existingItemIndex = shoppingList.findIndex(item => item.name === formDataObj.name);
+       if (existingItemIndex >= 0) {
+        const updatedShoppingList = shoppingList.map((item, index) => {
+            if (index === existingItemIndex) {
+                return {
+                    ...item,
+                    quantity: item.quantity + 1, 
+                    cost: item.cost + formDataObj.cost 
+                };
+            }
+            return item;
+        });
 
+    } else {
+       setShoppingList([...shoppingList, formDataObj]) }
 
-       setShoppingList([...shoppingList, formDataObj])
        form.reset();
    }
 
